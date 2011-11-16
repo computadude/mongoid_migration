@@ -1,8 +1,8 @@
-=== MongoidMigration
+= MongoidMigration
 
 ActiveRecord::Migration ported to Mongoid to run incremental/reversible migrations to manipulate/populate data in the database.
 
-= Generator
+== Rails Generator
 
 Run the generator to generate timestamped migration files:
 
@@ -13,7 +13,7 @@ which generates a timestamped migration file: mongodb/migrate/20111114234935_thi
 The migration has 2 class methods defined, self.up - executed when migrating up and self.down - executed when migrating down.
 Obviously ActiveRecord::ConnectionAdapters::SchemaStatements methods have not been ported over, so don't attempt to use them. (they make no sense for mongodb anyways)
 
-= The following rake tasks are available:
+== The following rake tasks are available:
 
 * rake db:mongoid:migrate                  # Migrate the database (options: VERSION=x, VERBOSE=false).
 * rake db:mongoid:migration:down           # Runs the "down" for a given migration VERSION.
