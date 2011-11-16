@@ -2,6 +2,12 @@
 
 ActiveRecord::Migration ported to Mongoid to run incremental/reversible migrations to manipulate/populate data in the database.
 
+== Rails 3.x
+
+insert this line to Gemfile:
+
+gem "mongoid_migration", "~> 0.0.3"
+
 == Rails Generator
 
 Run the generator to generate timestamped migration files:
