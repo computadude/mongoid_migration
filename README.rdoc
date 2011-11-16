@@ -19,7 +19,6 @@ Obviously ActiveRecord::ConnectionAdapters::SchemaStatements methods have not be
 * rake db:mongoid:migration:down           # Runs the "down" for a given migration VERSION.
 * rake db:mongoid:migration:status         # Display status of migrations
 * rake db:mongoid:migration:up             # Runs the "up" for a given migration VERSION.
-* rake db:mongoid:objectid_convert         # Convert string objectids in mongo database to ObjectID type
 * rake db:mongoid:rollback                 # Rolls migrations back to the previous version (specify steps w/ STEP=n).
 * rake db:mongoid:version                  # Retrieves the current schema version number
 
