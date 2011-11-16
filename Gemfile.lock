@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    mongoid_migration (0.0.2)
+    mongoid_migration (0.0.3)
       bson_ext
       mongoid (>= 2.0.1)
       rails (>= 3.0.1)
