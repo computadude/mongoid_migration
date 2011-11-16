@@ -1,0 +1,8 @@
+Description:
+    Mongoid migration generator generates 'migration' files for mongoid. 
+
+Example:
+    rails generate mongoid_migration Thing
+
+    This will create migration file:
+        mongodb/migrate/20111114234935_thing.rb
