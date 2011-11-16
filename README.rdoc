@@ -15,13 +15,13 @@ Obviously ActiveRecord::ConnectionAdapters::SchemaStatements methods have not be
 
 = The following rake tasks are available:
 
-rake db:mongoid:migrate                  # Migrate the database (options: VERSION=x, VERBOSE=false).
-rake db:mongoid:migration:down           # Runs the "down" for a given migration VERSION.
-rake db:mongoid:migration:status         # Display status of migrations
-rake db:mongoid:migration:up             # Runs the "up" for a given migration VERSION.
-rake db:mongoid:objectid_convert         # Convert string objectids in mongo database to ObjectID type
-rake db:mongoid:rollback                 # Rolls migrations back to the previous version (specify steps w/ STEP=n).
-rake db:mongoid:version                  # Retrieves the current schema version number
+* rake db:mongoid:migrate                  # Migrate the database (options: VERSION=x, VERBOSE=false).
+* rake db:mongoid:migration:down           # Runs the "down" for a given migration VERSION.
+* rake db:mongoid:migration:status         # Display status of migrations
+* rake db:mongoid:migration:up             # Runs the "up" for a given migration VERSION.
+* rake db:mongoid:objectid_convert         # Convert string objectids in mongo database to ObjectID type
+* rake db:mongoid:rollback                 # Rolls migrations back to the previous version (specify steps w/ STEP=n).
+* rake db:mongoid:version                  # Retrieves the current schema version number
 
 This is the fork of ActiveRecord::Migrations ported to work with mongoid.
 All thanks should go to the Rails team.
