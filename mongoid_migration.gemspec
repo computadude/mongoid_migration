@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", ">= 3.0.1"
   s.add_dependency "mongoid", ">= 2.0.1"
-  s.add_dependency "bson_ext"
 
   s.add_development_dependency "rails", '3.1.1'
+  s.add_development_dependency "bson_ext"
 end
