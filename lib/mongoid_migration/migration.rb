@@ -39,7 +39,7 @@ module MongoidMigration
   # until they are needed
   class MigrationProxy
     
-    attr_accessor :name, :version, :filename
+    attr_accessor :name, :version, :filename, :basename, :scope
 
     delegate :migrate, :announce, :write, :to=>:migration
 
@@ -71,6 +71,45 @@ module MongoidMigration
     cattr_accessor :verbose
 
     class << self
+      def copy(destination, sources, options = {})
+        copied = []
+        FileUtils.mkdir_p(destination) unless File.exists?(destination)
+
+        destination_migrations = MongoidMigration::Migrator.new(:up, destination).migrations
+        last = destination_migrations.last
+        sources.each do |scope, path|
+          source_migrations = MongoidMigration::Migrator.new(:up, path).migrations
+
+          source_migrations.each do |migration|
+            source = File.read(migration.filename)
+            source = "# This migration comes from #{scope} (originally #{migration.version})\n#{source}"
+
+            if duplicate = destination_migrations.detect { |m| m.name == migration.name }
+              if options[:on_skip] && duplicate.scope != scope.to_s
+                options[:on_skip].call(scope, migration)
+              end
+              next
+            end
+
+            migration.version = next_migration_number(last ? last.version + 1 : 0).to_i
+            new_path = File.join(destination, "#{migration.version}_#{migration.name.underscore}.#{scope}.rb")
+            old_path, migration.filename = migration.filename, new_path
+            last = migration
+
+            File.open(migration.filename, "w") { |f| f.write source }
+            copied << migration
+            options[:on_copy].call(scope, migration, old_path) if options[:on_copy]
+            destination_migrations << migration
+          end
+        end
+
+        copied
+      end
+      
+      def next_migration_number(number)
+        [Time.now.utc.strftime("%Y%m%d%H%M%S"), "%.14d" % number].max
+      end
+      
       def up_with_benchmarks #:nodoc:
         migrate(:up)
       end
@@ -274,7 +313,7 @@ module MongoidMigration
         files = Dir["#{@migrations_path}/[0-9]*_*.rb"]
 
         migrations = files.inject([]) do |klasses, file|
-          version, name = file.scan(/([0-9]+)_([_a-z0-9]*).rb/).first
+          version, name, scope = file.scan(/([0-9]+)_([_a-z0-9]*)\.?([a-z]*).rb/).first
 
           raise IllegalMigrationNameError.new(file) unless version
           version = version.to_i
@@ -288,9 +327,11 @@ module MongoidMigration
           end
 
           migration = MigrationProxy.new
+          migration.basename = File.basename(file)
           migration.name     = name.camelize
           migration.version  = version
           migration.filename = file
+          migration.scope    = scope unless scope.blank?
           klasses << migration
         end
 

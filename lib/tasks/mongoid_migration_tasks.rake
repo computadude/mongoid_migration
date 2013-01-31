@@ -1,7 +1,30 @@
 namespace :db do
   namespace :mongoid do
-    
     namespace :migration do
+      desc 'Installs migrations from engines into current application'
+      task :install => :environment do
+        to_load = ENV['FROM'].blank? ? :all : ENV['FROM'].split(",").map {|n| n.strip }
+        railties = {}
+
+        Rails.application.railties.all do |railtie|
+          next unless to_load == :all || to_load.include?(railtie.railtie_name)
+
+          if railtie.respond_to?(:paths) && railtie.paths['mongodb/migrate'].respond_to?(:first) && (path = railtie.paths['mongodb/migrate'].first)
+            railties[railtie.railtie_name] = path
+          end
+        end
+        
+        on_skip = Proc.new do |name, migration|
+          puts "NOTE: Migration #{migration.basename} from #{name} has been skipped. Migration with the same name already exists."
+        end
+
+        on_copy = Proc.new do |name, migration, old_path|
+          puts "Copied migration #{migration.basename} from #{name}"
+        end
+
+        MongoidMigration::Migration.copy(Rails.root.join('mongodb/migrate'), railties, :on_skip => on_skip, :on_copy => on_copy)
+      end
+      
       desc 'Runs the "up" for a given migration VERSION.'
       task :up => :environment do
         version = ENV["VERSION"] ? ENV["VERSION"].to_i : nil
