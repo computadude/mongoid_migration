@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    locomotive-mongoid_migration (0.0.4)
+    locomotive-mongoid_migration (0.0.5)
       mongoid (~> 2.4)
       rails (~> 3.2)
 
