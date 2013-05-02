@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    mongoid_migration (0.0.5)
+    locomotive-mongoid_migration (0.0.6)
       mongoid (~> 3.1)
       rails (~> 3.2)
 
@@ -101,4 +101,4 @@ PLATFORMS
 
 DEPENDENCIES
   bson_ext
-  mongoid_migration!
+  locomotive-mongoid_migration!
