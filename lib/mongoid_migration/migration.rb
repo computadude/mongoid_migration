@@ -65,7 +65,7 @@ module MongoidMigration
 
   	field :version
 
-  	index :version
+  	index(version: 1)
   	
     @@verbose = true
     cattr_accessor :verbose
