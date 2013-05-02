@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", '~> 3.2'
-  s.add_dependency 'mongoid', '~> 2.4'
+  s.add_dependency 'mongoid', '~> 3.1'
 
   s.add_development_dependency "bson_ext"
 end
