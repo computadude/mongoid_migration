@@ -5,7 +5,7 @@ require "mongoid_migration/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "locomotive-mongoid_migration"
+  s.name        = "mongoid_migration"
   s.version     = MongoidMigration::VERSION
   s.authors     = ["Mark Ronai"]
   s.email       = ["computadude@me.com"]
@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", '~> 3.2'
-  s.add_dependency 'mongoid', '~> 3.1'
+  s.add_dependency 'mongoid', '> 2.4'
 
   s.add_development_dependency "bson_ext"
 end
